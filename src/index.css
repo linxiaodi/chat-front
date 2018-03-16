@@ -1,5 +1,17 @@
+html, body {
+  height: 100%;
+}
+
 body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+}
+
+.textRight {
+  text-align: right;
+}
+
+.register, .login {
+  padding-bottom: 50px;
 }
