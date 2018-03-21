@@ -8,10 +8,101 @@ body {
   font-family: sans-serif;
 }
 
+.hide {
+  display: none;
+}
+
 .textRight {
   text-align: right;
 }
 
 .register, .login {
   padding-bottom: 50px;
+}
+
+.tabs .iconfont {
+  font-size: 18px;
+  transition: color .4s;
+}
+
+.framework {
+  position: relative;
+
+  height: 100%;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+#root {
+  height: 100%;
+}
+
+.main {
+  position: relative;
+  box-sizing: border-box;
+  padding-bottom: 50px;
+  height: 100%;
+}
+
+.tabs {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+.card-body-pre {
+  line-height: 1.6;
+  margin: 0;
+  font-size: .9em;
+}
+
+.salary {
+  color: #57bd88;
+}
+
+.card-footer-title {
+  display: flex;
+  align-items: center;
+}
+
+.card-footer-extra {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+}
+
+.card-footer-title img {
+  max-height: 34px;
+}
+
+.card-footer-title p {
+  color: #000;
+  margin-left: .5em;
+}
+
+.noMargin {
+  margin: 0;
+}
+
+.body-title{
+  margin-bottom:.8em;
+}
+
+.big-avatar{
+  width: 90%;
+}
+
+.primary{
+  color: #108ee9;
+}
+
+.warn{
+  color: #ca5b54;
 }

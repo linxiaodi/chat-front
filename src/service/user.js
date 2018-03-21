@@ -18,6 +18,14 @@ class User {
   static fillInfo(data) {
     return fetch.post(api.fillInfo, data)
   }
+
+  static initUser() {
+    return fetch.get(api.initUser)
+  }
+
+  static logout() {
+    return fetch.get(api.logout)
+  }
 }
 
 export default User

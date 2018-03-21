@@ -1,23 +1,44 @@
 import React from 'react'
 import { List, WingBlank, WhiteSpace, Radio, InputItem, Button } from 'antd-mobile'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
-import wrapper from '../../login/view/wrapper'
 import Logo from '../../../components/logo'
 import Validator from '../../../utils/validator'
 import { toastInfo } from '../../../utils/toast'
 import User from '../../../service/user'
+import * as actions from '../actions'
 
 const { RadioItem } = Radio
+const { login } = actions
+
+const mapStateToProps = state => ({
+  userInfo: state.userInfo
+})
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    doLogin(data) {
+      return dispatch(login(data))
+    }
+  }
+}
 
 class Register extends React.Component {
   constructor(props) {
     super(props)
     // event
+    this.saveInfo = this.saveInfo.bind(this)
+    this.doRegister = this.doRegister.bind(this)
     this.checkform = this.checkform.bind(this)
     this.doRegister = this.doRegister.bind(this)
-    this.doLogin = this.doLogin.bind(this)
+  }
+
+  saveInfo(type, v) {
+    this.setState({
+      [type]: v,
+    })
   }
 
   checkform() {
@@ -38,15 +59,8 @@ class Register extends React.Component {
     if (validateResult) return toastInfo(validateResult)
     User.register(this.props.state).then((res) => {
       if (res && res.code === 2000) {
-        this.doLogin()
+        this.props.doLogin(this.state)
       }
-    })
-  }
-
-  doLogin() {
-    this.props.doLogin(this.props.state).then((data) => {
-      const { role, isFillInfo } = data // true 登录成功，如何判断是否填写资料
-      this.props.history.push(isFillInfo ? '/' : `${role}Setting`)
     })
   }
 
@@ -57,7 +71,17 @@ class Register extends React.Component {
       verifyPassword,
       role,
     } = this.props.state
-    const { setFormState } = this.props
+    const { hasAuth } = this.props.user
+    const { isFillInfo } = this.props.userInfo
+    if (hasAuth) {
+      let redirectUrl = ''
+      if (isFillInfo) {
+        redirectUrl = '/central'
+      } else {
+        redirectUrl = `${this.props.user.role}Setting`
+      }
+      return <Redirect to={redirectUrl}/>
+    }
     return (
       <div className="register">
         <Logo/>
@@ -65,14 +89,14 @@ class Register extends React.Component {
           <List>
             <InputItem
               value={username}
-              onChange={setFormState.bind(this, 'username')}
+              onChange={this.setFormState.bind(this, 'username')}
               placeholder="请输入您的账号"
             >
               账号
             </InputItem>
             <InputItem
               value={password}
-              onChange={setFormState.bind(this, 'password')}
+              onChange={this.setFormState.bind(this, 'password')}
               placeholder="密码不能小于6位数"
               type="password"
             >
@@ -80,7 +104,7 @@ class Register extends React.Component {
             </InputItem>
             <InputItem
               value={verifyPassword}
-              onChange={setFormState.bind(this, 'verifyPassword')}
+              onChange={this.setFormState.bind(this, 'verifyPassword')}
               placeholder="请再次输入您的密码"
               type="password"
             >
@@ -92,14 +116,14 @@ class Register extends React.Component {
             <RadioItem
               value="boss"
               checked={role === 'boss'}
-              onChange={setFormState.bind(this, 'role', 'boss')}
+              onChange={this.setFormState.bind(this, 'role', 'boss')}
             >
               Boss
             </RadioItem>
             <RadioItem
               value="genius"
               checked={role === 'genius'}
-              onChange={setFormState.bind(this, 'role', 'genius')}
+              onChange={this.setFormState.bind(this, 'role', 'genius')}
             >
               求职者
             </RadioItem>
@@ -115,10 +139,10 @@ class Register extends React.Component {
 }
 
 Register.propTypes = {
+  user: PropTypes.object.isRequired,
   doLogin: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired,
-  state: PropTypes.object.isRequired,
-  setFormState: PropTypes.func.isRequired
+  userInfo: PropTypes.object.isRequired,
+  state: PropTypes.object.isRequired
 }
 
-export default wrapper(Register)
+export default connect(mapStateToProps, mapDispatchToProps)(Register)

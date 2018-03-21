@@ -6,6 +6,7 @@ const initState = {
   selfDescription: '',
   jobDescription: '',
   salary: '',
+  isFillInfo: false
 }
 
 export default (state = initState, action) => {

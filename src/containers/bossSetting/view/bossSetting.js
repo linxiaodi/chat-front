@@ -1,7 +1,6 @@
 import React from 'react'
 import { NavBar, List, WhiteSpace, InputItem, TextareaItem, Button } from 'antd-mobile'
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import { toastInfo } from '../../../utils/toast'
@@ -16,7 +15,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = (dispatch) => {
   return {
     fillInfo(data) {
-      dispatch(actions.fillInfo(data))
+      return dispatch(actions.fillInfo(data))
     }
   }
 }
@@ -68,7 +67,9 @@ class BossSetting extends React.Component {
     if (validateResult) {
       toastInfo(validateResult)
     }
-    this.props.fillInfo(this.state)
+    this.props.fillInfo(this.state).then(() => {
+      this.props.history.push('/')
+    })
   }
 
   render() {
@@ -79,10 +80,6 @@ class BossSetting extends React.Component {
       salary,
       jobDescription
     } = this.state
-    const { isFillInfo } = this.props.user
-    if (isFillInfo) {
-      return <Redirect to="/central" />
-    }
     return (
       <div>
         <NavBar mode="dark">Boos完善信息页</NavBar>
@@ -134,7 +131,7 @@ class BossSetting extends React.Component {
 }
 
 BossSetting.propTypes = {
-  user: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
   fillInfo: PropTypes.func.isRequired
 }
 

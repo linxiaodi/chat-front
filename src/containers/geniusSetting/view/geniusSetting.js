@@ -2,23 +2,16 @@ import React from 'react'
 import { NavBar, List, WhiteSpace, InputItem, TextareaItem, Button } from 'antd-mobile'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Redirect } from 'react-router-dom'
 
 import { toastInfo } from '../../../utils/toast'
 import Validator from '../../../utils/validator'
 import AvatarSelector from '../../../components/avatar-selector/'
 import { fillInfo } from '../actions'
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.user.isFillInfo
-  }
-}
-
 const mapDispatchToProps = (dispatch) => {
   return {
     fillInfo(data) {
-      dispatch(fillInfo(data))
+      return dispatch(fillInfo(data))
     }
   }
 }
@@ -68,7 +61,9 @@ class GeniusSetting extends React.Component {
     if (validateResult) {
       toastInfo(validateResult)
     }
-    this.props.fillInfo(this.state)
+    this.props.fillInfo(this.state).then(() => {
+      this.props.history.push('/')
+    })
   }
 
   render() {
@@ -78,10 +73,6 @@ class GeniusSetting extends React.Component {
       salary,
       selfDescription
     } = this.state
-    const { isFillInfo } = this.props.user
-    if (isFillInfo) {
-      return <Redirect to="/central" />
-    }
     return (
       <div>
         <NavBar mode="dark">牛人完善信息页</NavBar>
@@ -126,8 +117,8 @@ class GeniusSetting extends React.Component {
 }
 
 GeniusSetting.propTypes = {
-  user: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
   fillInfo: PropTypes.func.isRequired,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(GeniusSetting)
+export default connect(null, mapDispatchToProps)(GeniusSetting)

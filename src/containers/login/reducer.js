@@ -1,9 +1,8 @@
-import { LOGIN_SUCCESS, LOGIN_FAIL, FILL_INFO } from './actionTypes'
+import { LOGIN_SUCCESS, LOGIN_FAIL, FILL_INFO, RESET } from './actionTypes'
 
 const initState = {
   role: 'boss',
-  username: '',
-  isFillInfo: false, // 是否填写了基本信息
+  _id: '',
   msg: '',
   hasAuth: false // 是否登录
 }
@@ -14,13 +13,15 @@ export default function (state = initState, action) {
       return {
         ...state,
         role: action.payload.role,
-        isFillInfo: action.payload.isFillInfo,
+        _id: action.payload._id,
         hasAuth: true
       }
     case LOGIN_FAIL:
-      return { ...state, ...{ msg: action.payload.msg }, isFillInfo: false }
+      return { ...state, ...{ msg: action.payload.msg } }
     case FILL_INFO:
       return { ...state, ...action.payload }
+    case RESET:
+      return initState
     default:
       return state
   }

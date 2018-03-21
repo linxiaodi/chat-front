@@ -39,7 +39,7 @@ PS：别的想法。做成类似咸鱼的二手物品网站。
         hasAuth: Boolean, // 是否登录，用于路由的跳转
         role: 'boss' 或者 'genius'
     },
-    baseInfo: {
+    userInfo: {
         avatar: '' // 用户头像
         nickname: '' // 昵称,
         job: '' // 工作岗位&寻找的工作
@@ -48,6 +48,8 @@ PS：别的想法。做成类似咸鱼的二手物品网站。
         jobDesc: '', // 工作描述
         // 牛人
         selfDesc: '', //自我描述
-    }
+    },
+    discoveryList: [{}],
+
 }
 ```

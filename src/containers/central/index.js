@@ -1,12 +1,5 @@
-import React from 'react'
-import DashBoard from '../../components/dashboard'
+import view from './view/central'
 
-const Central = () => {
-  return (
-    <DashBoard>
-      中心页面
-    </DashBoard>
-  )
+export {
+  view
 }
-
-export default Central

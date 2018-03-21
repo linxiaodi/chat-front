@@ -1,0 +1,5 @@
+const GET_LIST_SUCCESS = 'GET_LIST_SUCCESS'
+
+export {
+  GET_LIST_SUCCESS
+}
