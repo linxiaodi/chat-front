@@ -13,7 +13,9 @@ export default function (state = initState, action) {
       return {
         ...state,
         role: action.payload.role,
-        _id: action.payload._id,
+        _id: action.payload._id.toString(),
+        avatar: action.payload.avatar || 'http://oph3rwqhn.bkt.clouddn.com/18-3-26/88043022.jpg',
+        nickname: action.payload.nickname,
         hasAuth: true
       }
     case LOGIN_FAIL:

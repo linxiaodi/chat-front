@@ -16,7 +16,7 @@ const NavBar = (props) => {
               title={el.text}
               selectedIcon={<i className={el.icon} style={{ color: '#108ee9' }}/>}
             >
-              { el.component }
+              {el.component}
             </Item>
           )
         })

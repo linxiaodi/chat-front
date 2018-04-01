@@ -6,17 +6,29 @@ import { connect } from 'react-redux'
 import NavLink from '../../../components/nav-link'
 import { view as Discovery } from '../../discovery/'
 import { view as Central } from '../../central/'
+import { view as Contact } from '../../contact/'
 import { actions as userActions } from '../../login/'
-
-const Message = () => (<div>消息</div>)
+import { actions as chatActions } from '../../chat/'
+import { actions as discoveryAction } from '../../discovery/'
+import init from '../../../utils/init'
 
 const mapStateToProps = state => ({
-  user: state.user
+  user: state.user,
+  chat: state.chat
 })
 
 const mapDispatchToProps = dispatch => ({
   initUser() {
-    dispatch(userActions.initUser())
+    return dispatch(userActions.initUser())
+  },
+  initSocket() {
+    return dispatch(chatActions.recvMsg())
+  },
+  getMsgList() {
+    return dispatch(chatActions.getMsgList())
+  },
+  initDiscovery() {
+    return dispatch(discoveryAction.getList())
   }
 })
 
@@ -36,7 +48,7 @@ class Dashboard extends React.Component {
           icon: 'iconfont icon-message',
           text: '消息',
           title: '消息',
-          component: Message,
+          component: Contact,
           path: `${this.props.match.url}/message`
         },
         {
@@ -52,8 +64,15 @@ class Dashboard extends React.Component {
   }
 
   componentDidMount() {
-    const { avatar } = this.props.user
-    if (!avatar) this.props.initUser()
+    const {
+      initSocket,
+      initUser,
+      chat,
+      getMsgList,
+      user
+    } = this.props
+    init(initSocket, initUser, chat.chatDetails, getMsgList, user)
+    this.props.initDiscovery()
   }
 
   getDiscoveryTitle() {
@@ -64,7 +83,7 @@ class Dashboard extends React.Component {
     const { navTabLinks } = this.state
     const title = () => {
       const tabLinks = this.state.navTabLinks
-      const { pathname } = window.location
+      const pathname = window.location.hash.split('#')[1]
       const i = tabLinks.findIndex(e => e.path === pathname)
       return i > 0 ? tabLinks[i].title : this.getDiscoveryTitle()
     }
@@ -88,7 +107,11 @@ class Dashboard extends React.Component {
 Dashboard.propTypes = {
   match: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
-  initUser: PropTypes.func.isRequired
+  chat: PropTypes.object.isRequired,
+  initUser: PropTypes.func.isRequired,
+  initSocket: PropTypes.func.isRequired,
+  getMsgList: PropTypes.func.isRequired,
+  initDiscovery: PropTypes.func.isRequired,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)

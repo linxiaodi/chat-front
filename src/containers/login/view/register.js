@@ -58,6 +58,7 @@ class Register extends React.Component {
     const validateResult = this.checkform()
     if (validateResult) return toastInfo(validateResult)
     User.register(this.props.state).then((res) => {
+      debugger
       if (res && res.code === 2000) {
         this.props.doLogin(this.state)
       }

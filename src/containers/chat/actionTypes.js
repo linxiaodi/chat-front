@@ -1,0 +1,11 @@
+const MSG_RECV = 'MSG_RECV'
+const SET_MSG_LIST = 'SET_MSG_LIST'
+const MSG_READ = 'MSG_READ'
+const OPEN_SOCKET = 'OPEN_SOCKET'
+
+export {
+  MSG_READ,
+  MSG_RECV,
+  SET_MSG_LIST,
+  OPEN_SOCKET
+}

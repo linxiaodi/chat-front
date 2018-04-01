@@ -1,9 +1,9 @@
 module.exports = {
   'extends': 'airbnb',
-  "globals": {
-    "document": false,
-    "window": false,
-    "@": false,
+  'globals': {
+    'document': false,
+    'window': false,
+    '@': false,
     es6: true,
   },
   'rules': {
@@ -15,7 +15,7 @@ module.exports = {
     'no-console': 0,
     'import/prefer-default-export': 0,
     'react/jsx-tag-spacing': 0,
-    "jsx-a11y/anchor-is-valid": 0,
+    'jsx-a11y/anchor-is-valid': 0,
     'no-trailing-spaces': 0,
     'react/jsx-no-bind': 0,
     'consistent-return': 0,
@@ -24,6 +24,13 @@ module.exports = {
     'no-underscore-dangle': 0,
     'react/forbid-prop-types': 0,
     'react/no-unused-state': 0,
-    'no-unreachable': 0
+    'no-unreachable': 0,
+    'no-shadow': 0,
+    'no-return-assign': 0,
+    'jsx-a11y/click-events-have-key-events': 0,
+    'jsx-a11y/no-static-element-interactions': 0,
+    'import/no-duplicates': 0,
+    'no-multi-spaces': 0,
+    'space-in-parens': 0
   }
 }

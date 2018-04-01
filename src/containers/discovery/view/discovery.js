@@ -3,8 +3,6 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Card, WhiteSpace } from 'antd-mobile'
 
-import { getList } from '../actions'
-
 const CardHeader = Card.Header
 const CardBody = Card.Body
 const CardFooter = Card.Footer
@@ -14,22 +12,17 @@ const mapStateToProps = state => ({
   discoveryList: state.discoveryList
 })
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    initList(query) {
-      return dispatch(getList(query))
-    }
-  }
-}
-
 class Discovery extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.toChat = this.toChat.bind(this)
   }
 
-  componentDidMount() {
-    this.props.initList()
+  toChat(el) {
+    return () => {
+      const { _id } = el
+      this.props.history.push(`/chat/${_id}`)
+    }
   }
 
   render() {
@@ -53,7 +46,7 @@ class Discovery extends React.Component {
             )
             return (
               <div key={el.updateTime}>
-                <Card>
+                <Card onClick={this.toChat(el)}>
                   <CardHeader
                     title={el.job}
                     extra={<span className="salary">{el.salary}</span>}
@@ -83,8 +76,8 @@ class Discovery extends React.Component {
 
 Discovery.propTypes = {
   user: PropTypes.object.isRequired,
-  initList: PropTypes.func.isRequired,
-  discoveryList: PropTypes.array.isRequired
+  discoveryList: PropTypes.array.isRequired,
+  history: PropTypes.object.isRequired
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Discovery)
+export default connect(mapStateToProps)(Discovery)

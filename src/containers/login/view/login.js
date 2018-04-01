@@ -21,8 +21,11 @@ class Login extends React.Component {
     if (result) return toastInfo(result)
     const { username, password } = this.props.state
     this.props.doLogin({ username, password }).then((res) => {
-      const { role, isFillInfo } = res // true 登录成功，如何判断是否填写资料
-      this.props.history.push(isFillInfo ? '/' : `${role}Setting`)
+      console.log(res)
+      if (res) {
+        const { role, isFillInfo } = res // true 登录成功，如何判断是否填写资料
+        this.props.history.push(isFillInfo ? '/' : `${role}Setting`)
+      }
     })
   }
 
@@ -69,6 +72,7 @@ class Login extends React.Component {
     )
   }
 }
+
 //
 Login.propTypes = {
   doLogin: PropTypes.func.isRequired,

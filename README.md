@@ -50,6 +50,36 @@ PS：别的想法。做成类似咸鱼的二手物品网站。
         selfDesc: '', //自我描述
     },
     discoveryList: [{}],
-
+    chat: {
+        chatDetails: [
+            {
+                from: '',
+                to: '',
+                content: String,
+                date: Number
+            }
+        ],
+        chatList: [
+            {
+                avatar: '',
+                nickname: '',
+                job: '',
+                _id: '',
+                last: {
+                    from: '',
+                    to: '',
+                    content: '',
+                    date: Number
+                }
+            }
+        ],
+        currentUser: {
+            _id: ''
+        }
+        unread: Number
+    }
 }
 ```
+
+## 繁琐的地方
+1. 在计算联系人列表与是否已读状态，初始化的计算，websocket连接的计算。

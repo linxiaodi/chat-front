@@ -36,7 +36,9 @@ function reset() {
 function login(data) {
   return (dispatch) => {
     return User.login(data).then((res) => {
-      dispatch(loginSuccess(res))
+      if (res && res.code === 2000) {
+        dispatch(loginSuccess(res))
+      }
       return res
     }).catch((error) => {
       dispatch(loginFail(error))

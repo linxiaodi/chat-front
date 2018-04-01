@@ -13,11 +13,14 @@ axios.interceptors.response.use((res) => {
   const { code } = res.data
   const match = code.toString().match('40')
   if (code === 4006) {
-    window.location.href = '/login'
+    window.location.href = '/#/login'
+  }
+  if (code === 4007) {
+    window.location.href = `/#/${res.data.data.role}Setting`
   }
   if (match) {
     toastInfo(res.data.msg)
-    throw new Error(res.data.msg)
+    throw new Error(res.data.message)
   }
   return res.data
 })
@@ -30,10 +33,8 @@ const fetch = (function () {
       url,
       ...reqParams,
       timeout: 4000,
-    }).catch((error) => {
-      if (axios.isCancel(error)) {
-        console.log('Request canceled', error.message)
-      }
+    }).catch((err) => {
+      return Promise.reject(err)
     })
   }
   return {
